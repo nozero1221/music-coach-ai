@@ -14,21 +14,28 @@ A phone-friendly, **free local music coaching toolkit** hosted on GitHub Pages.
 
 ### Song Scan
 
-Analyzes the selected audio file directly in the browser and measures duration, peak level, rough RMS level, clipping estimate, dynamic range, crest factor, relative energy, and technical flags. It also prepares a detailed ChatGPT coaching request for subjective feedback such as flow, delivery, hooks, structure, mix clarity, originality, and commercial-readiness.
+Analyzes a song locally in the browser for duration, peak level, rough RMS, clipping, dynamic range, crest factor, and relative energy. It prepares a ChatGPT coaching request for subjective feedback such as flow, delivery, hooks, structure, mix clarity, originality, and commercial-readiness.
 
-### Lyrics & Delivery Lab
+### Lyrics & Delivery
 
-Lets you paste a section of lyrics and choose its song role and emotion. The local lab provides:
+Lets you paste lyrics and plan pronunciation, emphasis, phrasing, emotion, doubles, harmonies, ad-libs, reverb/delay, automation, and the emotional role of each song section. It prepares a ChatGPT request for original replacement lyric options.
 
-- line-by-line word-emphasis guidance
-- normal pronunciation playback using the device voice
-- phrasing and line-ending suggestions
-- section-role and emotion guidance
-- lead vocal, doubles, harmonies, ad-lib, reverb/delay, and automation ideas
-- a simple song emotion arc
-- original writing-direction starters
-- a prepared ChatGPT request for original replacement lines, detailed pronunciation/phrasing coaching, and production advice
+### Beat → Song Builder
 
-The local page does not pretend to generate AI lyric rewrites by itself. For creative replacement lyrics, the handoff explicitly asks ChatGPT for **original** options rather than copying or closely imitating an existing song or artist.
+Upload an instrumental and analyze its energy locally. The page shows a 12-part energy map, highlights the highest-energy area, creates a rough timestamped song-structure starting point, and suggests contrasting verse/hook flow approaches.
+
+Then tap **Copy full-song request**, attach the same beat in ChatGPT, and paste the request. It asks ChatGPT to listen to the actual beat and create:
+
+- an original song concept/title
+- timestamped structure
+- full original lyrics
+- line-by-line flow and pronunciation directions
+- cadence switches
+- alternate original hook ideas
+- emotional arc
+- lead/double/harmony/ad-lib production directions
+- a recording roadmap
+
+The local structure is only a starting guess; the listening-based coaching should correct it based on the actual musical transitions.
 
 No paid OpenAI API or Render setup is required for this version.
