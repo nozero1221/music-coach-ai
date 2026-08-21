@@ -1,0 +1,285 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-08-21",
+  "purpose": "Reference high-level songwriting patterns across eras, genres, and artist technique profiles without storing or reproducing copyrighted lyrics or melodies.",
+  "guardrails": [
+    "Use artist entries only as analysis labels for high-level techniques, never as instructions to imitate a living or deceased artist.",
+    "Never reproduce recognizable lyrics, melodies, signature flows, or passages from reference songs.",
+    "Measured findings and heuristic observations are labeled separately.",
+    "Hit-potential scores are songwriting diagnostics, not predictions or guarantees."
+  ],
+  "measured_priors": [
+    {
+      "id": "billboard-21c-selection",
+      "type": "chart-source",
+      "finding": "Billboard's Top Hot 100 Songs of the 21st Century retrospective is based on weekly Hot 100 performance from the start of 2000 through the end of 2024.",
+      "use": "Use chart performance only as a selection signal for which successful songs/eras deserve study; do not infer causation from rank alone.",
+      "source": "Billboard / Billboard Canada, Top Hot 100 Songs of the 21st Century"
+    },
+    {
+      "id": "chorus-timing-2011-2019",
+      "type": "measured-study",
+      "sample": "2,487 hit songs across pop, rock, R&B/hip-hop, and country from 2011-2019",
+      "finding": "Average first-chorus start decreased by 5.41 seconds for songs released during/after 2015; after controlling for total runtime, the average difference was 2.303 seconds earlier.",
+      "use": "Do not assume modern hits require an immediate chorus. Favor a strong early identity, but let the beat determine whether the hook should arrive early.",
+      "source": "UC Riverside research on streaming-era popular-song composition"
+    },
+    {
+      "id": "duration-2000-2023",
+      "type": "measured-dataset",
+      "sample": "1,048,575 Spotify tracks across 82 genre labels",
+      "finding": "Mean duration in 2018-2023 was about 221.5 seconds versus 249.3 seconds in 2000-2009, a reduction of about 28 seconds; the tempo difference was only about 1 BPM and practically negligible.",
+      "use": "Modern songs can be more economical, but do not shorten sections just to chase streaming. Tempo should be chosen from the beat, not era stereotypes.",
+      "source": "Did Streaming Break How Songs Are Built? public research dataset"
+    }
+  ],
+  "dimensions": [
+    "hook_repetition",
+    "conversationality",
+    "internal_rhyme",
+    "multisyllabic_rhyme",
+    "melodic_phrase_strength",
+    "negative_space",
+    "cadence_variation",
+    "storytelling",
+    "emotional_directness",
+    "punchline_density",
+    "section_contrast",
+    "lyric_density"
+  ],
+  "era_profiles": [
+    {
+      "era": "2000-2006",
+      "type": "heuristic",
+      "traits": ["longer average song forms than current streaming-era norms", "clear verse/chorus identities", "more tolerance for intros and instrumental setup", "bridges and third-act variation common across pop/rock/R&B"],
+      "use_when": "The beat develops gradually or benefits from fuller narrative progression."
+    },
+    {
+      "era": "2007-2013",
+      "type": "heuristic",
+      "traits": ["strong pre-chorus lift in pop", "large section contrast", "hook repetition balanced with full verses", "rap frequently uses distinct verse flows around a stable chorus"],
+      "use_when": "The instrumental has obvious rises and drops that support section contrast."
+    },
+    {
+      "era": "2014-2019",
+      "type": "heuristic",
+      "traits": ["trap-influenced pocket becomes broadly dominant in rap", "melodic rap expands", "short title phrases and repeated motifs become especially important", "looser rhyme is acceptable when vocal melody carries the section"],
+      "use_when": "The beat supports melody, half-time trap pockets, or emotionally direct repetition."
+    },
+    {
+      "era": "2020-2026",
+      "type": "heuristic",
+      "traits": ["economical song length is common", "strong identity early in the track", "genre blending is normal", "hooks may be very short and recur often", "vocal texture, cadence and production can carry repetition that would look simple on paper"],
+      "use_when": "The beat is concise, loop-driven, or relies heavily on texture and replayability."
+    }
+  ],
+  "genre_profiles": [
+    {
+      "genre": "mainstream-pop",
+      "type": "heuristic",
+      "priorities": ["title phrase recall", "clear section contrast", "simple chorus language", "pre-chorus lift when useful", "repeatable melodic contour"],
+      "avoid": ["verse-level complexity leaking into the chorus", "too many competing hook phrases"]
+    },
+    {
+      "genre": "hip-hop",
+      "type": "heuristic",
+      "priorities": ["pocket confidence", "natural spoken rhythm", "selective rhyme clusters", "strong line endings", "contrast between verse density and hook economy"],
+      "avoid": ["rhyme-first nonsense", "same cadence for an entire verse"]
+    },
+    {
+      "genre": "lyrical-rap",
+      "type": "heuristic",
+      "priorities": ["internal rhyme", "multisyllabic rhyme", "semantic continuity", "controlled cadence switches", "setup/payoff relationships"],
+      "avoid": ["technical density without meaning", "switches that ignore the drum pocket"]
+    },
+    {
+      "genre": "melodic-rap",
+      "type": "heuristic",
+      "priorities": ["speech-shaped melody", "short memorable phrases", "elastic rhyme", "held vowels at emotional words", "verse-to-hook melodic lift"],
+      "avoid": ["overwriting", "forcing perfect rhymes", "melodies too complex for the vocalist"]
+    },
+    {
+      "genre": "emo-rap",
+      "type": "heuristic",
+      "priorities": ["emotional directness", "specific personal detail", "simple central phrase", "negative space", "melody that sounds conversational rather than theatrical"],
+      "avoid": ["generic sadness vocabulary", "constant metaphors", "filling every bar"]
+    },
+    {
+      "genre": "trap",
+      "type": "heuristic",
+      "priorities": ["rhythmic pocket", "repetition as groove", "short motifs", "ad-lib space", "cadence contrast across 4- or 8-bar units"],
+      "avoid": ["too many syllables over open drums", "hook language that is harder than the verse"]
+    },
+    {
+      "genre": "rnb",
+      "type": "heuristic",
+      "priorities": ["melodic phrasing", "vowel-friendly wording", "syncopation", "call-and-response", "harmonic space for doubles and harmonies"],
+      "avoid": ["wordy phrases that fight sustained melody"]
+    },
+    {
+      "genre": "pop-punk-emo-rock",
+      "type": "heuristic",
+      "priorities": ["clear emotional thesis", "big chorus contrast", "concrete scene-setting in verses", "repeatable title line", "bridge or final-section escalation"],
+      "avoid": ["choruses that read like another verse", "abstract emotion without images"]
+    },
+    {
+      "genre": "alternative-rock",
+      "type": "heuristic",
+      "priorities": ["dynamic contrast", "motif development", "strong section identity", "space for instrumental hooks", "less dependence on perfect rhyme"],
+      "avoid": ["lyrics occupying every instrumental motif"]
+    },
+    {
+      "genre": "country",
+      "type": "heuristic",
+      "priorities": ["concrete storytelling", "clear perspective", "specific objects/places/actions", "title payoff", "Verse 2 progression"],
+      "avoid": ["generic setup without consequence", "cleverness that hides the story"]
+    },
+    {
+      "genre": "indie-alternative",
+      "type": "heuristic",
+      "priorities": ["distinctive imagery", "understated hooks", "unusual but natural phrasing", "dynamic restraint", "instrumental breathing room"],
+      "avoid": ["trying to sound poetic on every line"]
+    },
+    {
+      "genre": "dance-electronic-pop",
+      "type": "heuristic",
+      "priorities": ["very clear topline", "short lyric cells", "repetition", "pre-drop tension", "instrumental answer sections"],
+      "avoid": ["dense verses over drop-focused arrangements"]
+    }
+  ],
+  "technique_archetypes": [
+    {
+      "name": "melodic-conversational",
+      "traits": ["natural speech rhythm", "narrow melodic shapes", "elastic rhyme", "emotional words get the longest notes"],
+      "best_for": ["melodic rap", "emo rap", "R&B hybrids", "intimate pop"]
+    },
+    {
+      "name": "dense-technical",
+      "traits": ["internal rhyme chains", "multisyllabic rhyme", "controlled syncopation", "frequent but purposeful cadence shifts"],
+      "best_for": ["lyrical rap", "aggressive drums", "verses that need technical excitement"]
+    },
+    {
+      "name": "sparse-minimal",
+      "traits": ["few words", "strong rests", "repeated motifs", "delivery and tone carry meaning"],
+      "best_for": ["dark trap", "minimal rap", "atmospheric beats"]
+    },
+    {
+      "name": "story-forward",
+      "traits": ["scene then consequence", "specific details", "Verse 2 adds information", "hook summarizes emotional meaning"],
+      "best_for": ["country", "rap storytelling", "rock", "singer-songwriter forms"]
+    },
+    {
+      "name": "cadence-switch-heavy",
+      "traits": ["multiple rhythmic pockets", "switches at musical boundaries", "repeated rhythm cells before each change"],
+      "best_for": ["busy drums", "technical rap", "playful hip-hop"]
+    },
+    {
+      "name": "hook-first",
+      "traits": ["title phrase appears early", "chorus language is simpler than verse language", "small number of repeated phrases"],
+      "best_for": ["pop", "melodic rap", "dance-pop", "short-form streaming songs"]
+    },
+    {
+      "name": "repetition-led",
+      "traits": ["one phrase earns multiple repetitions", "micro-variation", "ad-libs and production create progression"],
+      "best_for": ["trap", "pop", "dance", "melodic rap"]
+    },
+    {
+      "name": "dynamic-rock",
+      "traits": ["verse restraint", "chorus expansion", "instrumental hooks", "bridge/final chorus escalation"],
+      "best_for": ["rock", "pop-punk", "alternative"]
+    },
+    {
+      "name": "rnb-pocket",
+      "traits": ["syncopated entries", "vowel-friendly endings", "melisma only where earned", "call-and-response support vocals"],
+      "best_for": ["R&B", "pop-R&B", "melodic rap hybrids"]
+    },
+    {
+      "name": "hybrid-balanced",
+      "traits": ["one primary technique family", "one secondary contrast family", "hook stays simple even if verses are technical"],
+      "best_for": ["genre-blended beats", "songs that need both replayability and lyrical depth"]
+    }
+  ],
+  "artist_technique_profiles": [
+    {
+      "artist": "Eminem",
+      "type": "heuristic-reference-only",
+      "strengths": ["internal and multisyllabic rhyme", "cadence control", "setup/payoff writing", "technical rhythmic variation"],
+      "translate_to_original_work": "Borrow the principle of dense rhyme with semantic purpose only when the beat supports it; never imitate recognizable flows or phrasing."
+    },
+    {
+      "artist": "Juice WRLD",
+      "type": "heuristic-reference-only",
+      "strengths": ["conversational melodic phrasing", "emotional immediacy", "flexible rhyme", "smooth movement between rap and melody"],
+      "translate_to_original_work": "Favor natural speech-shaped melody and emotionally direct lines; keep concepts and phrases fully original."
+    },
+    {
+      "artist": "Lil Peep",
+      "type": "heuristic-reference-only",
+      "strengths": ["economical emotional writing", "repetition", "emo/rock sensibility over hip-hop production", "simple phrases carrying strong tone"],
+      "translate_to_original_work": "Use restraint and direct emotion when the instrumental is atmospheric; do not imitate lyric topics, melodies, or signature wording."
+    },
+    {
+      "artist": "Lil Uzi Vert",
+      "type": "heuristic-reference-only",
+      "strengths": ["short repeated motifs", "melodic phrasing", "vocal texture", "catchy phrase economy"],
+      "translate_to_original_work": "Test compact, repeatable hook cells and unusual but natural melodic shapes without copying flows."
+    },
+    {
+      "artist": "Ski Mask the Slump God",
+      "type": "heuristic-reference-only",
+      "strengths": ["off-kilter pockets", "rapid cadence changes", "playful rhythmic phrasing", "dense rhyme bursts"],
+      "translate_to_original_work": "Use controlled rhythmic surprise where drums invite it; keep transitions musically motivated."
+    },
+    {
+      "artist": "Trippie Redd",
+      "type": "heuristic-reference-only",
+      "strengths": ["melodic intensity", "held vowels", "hook-forward construction", "contrast between raw verses and sung phrases"],
+      "translate_to_original_work": "Use emotionally strong sustained words selectively and only within the vocalist's comfortable range."
+    },
+    {
+      "artist": "21 Savage",
+      "type": "heuristic-reference-only",
+      "strengths": ["minimal wording", "negative space", "direct phrasing", "delivery-driven memorability"],
+      "translate_to_original_work": "Let rests and tone do work instead of adding filler; keep wording original and beat-specific."
+    },
+    {
+      "artist": "Drake",
+      "type": "heuristic-reference-only",
+      "strengths": ["conversational phrasing", "rap-to-melody transitions", "memorable everyday language", "section-level mood control"],
+      "translate_to_original_work": "Prioritize lines that sound natural aloud and clean transitions between rhythmic and melodic sections."
+    },
+    {
+      "artist": "Cordae",
+      "type": "heuristic-reference-only",
+      "strengths": ["clear storytelling", "balanced rhyme density", "lyrical clarity", "structured verse development"],
+      "translate_to_original_work": "Keep technical writing understandable and make each verse progress the idea."
+    },
+    {
+      "artist": "Kendrick Lamar",
+      "type": "heuristic-reference-only",
+      "strengths": ["perspective shifts", "conceptual structure", "voice/cadence character changes", "narrative detail"],
+      "translate_to_original_work": "Use perspective and cadence changes only when they clarify the concept; never imitate recognizable voices or flows."
+    },
+    {
+      "artist": "The Weeknd",
+      "type": "heuristic-reference-only",
+      "strengths": ["strong toplines", "clear melodic motifs", "dark-pop atmosphere", "chorus recall"],
+      "translate_to_original_work": "Prioritize a clear melodic identity and section contrast without copying melody or lyrical themes."
+    },
+    {
+      "artist": "Post Malone",
+      "type": "heuristic-reference-only",
+      "strengths": ["genre blending", "melodic hook economy", "conversational phrasing", "vocal texture"],
+      "translate_to_original_work": "Blend genre techniques only when the beat supports them and keep the hook simpler than the verse."
+    }
+  ],
+  "selection_logic": {
+    "step_1": "Identify beat structure, energy changes, drum density, available vocal space, and likely emotional lane.",
+    "step_2": "Choose one primary genre profile and optionally one secondary genre profile.",
+    "step_3": "Compare at least three technique archetype blends and select the best-fitting blend.",
+    "step_4": "Use artist technique profiles only as a checklist of high-level craft options, never as imitation targets.",
+    "step_5": "Draft hook first, then test natural speech, memorability, melodic space, and vocal ease before writing full verses.",
+    "step_6": "Run overfill and section-progression checks; remove words if space improves the song.",
+    "step_7": "Score hook recall, natural phrasing, pocket, contrast, emotional clarity, originality, and replayability; revise any score below 8/10."
+  }
+}
