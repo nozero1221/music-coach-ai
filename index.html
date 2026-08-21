@@ -14,21 +14,21 @@
 <body>
 <main class="shell">
 <header class="top"><div class="brand"><div class="logo">♫</div><div>Music Coach</div></div><div class="free">$0 • local tools • no API</div></header>
-<nav class="tabs" aria-label="Music Coach tools">
-<button class="tab active" data-mode="scan">🎵 Song Scan</button>
-<button class="tab" data-mode="lyrics">✍️ Lyrics & Delivery</button>
-<button class="tab" data-mode="beat">🥁 Beat → Song Builder</button>
+<nav class="tabs" aria-label="Music Coach workflow">
+<button class="tab active" data-mode="beat">1️⃣ 🥁 Beat → Song Builder</button>
+<button class="tab" data-mode="lyrics">2️⃣ ✍️ Lyrics & Delivery</button>
+<button class="tab" data-mode="scan">3️⃣ 🎵 Song Scan</button>
 </nav>
-<iframe id="toolsFrame" class="frame active" src="song-tools.html" title="Song Scan and Lyrics Lab"></iframe>
-<iframe id="beatFrame" class="frame" src="beat-local-generator.html?v=ios-safe-20260821-2" title="Beat to Song Builder with free local AI and Songwriting DNA v2"></iframe>
-<div class="note">Beat analysis and optional lyric generation can run locally on your device. No paid API is required.</div>
+<iframe id="beatFrame" class="frame active" src="beat-native-generator.html?v=native-20260821-1" title="Beat to Song Builder with DNA Native Generator"></iframe>
+<iframe id="toolsFrame" class="frame" src="song-tools.html" title="Lyrics Lab and Song Scan"></iframe>
+<div class="note">Workflow: build from the beat → refine lyrics/delivery → scan the finished song. Native song generation uses browser code only: no model download, API, credits, trial, or account.</div>
 </main>
 <script>
-const tabs=[...document.querySelectorAll('.tab')],tools=document.getElementById('toolsFrame'),beat=document.getElementById('beatFrame');let mode='scan';
+const tabs=[...document.querySelectorAll('.tab')],tools=document.getElementById('toolsFrame'),beat=document.getElementById('beatFrame');let mode='beat';
 function cleanTools(){try{const d=tools.contentDocument;if(!d)return;if(!d.getElementById('shellEmbedStyle')){const s=d.createElement('style');s.id='shellEmbedStyle';s.textContent='.top,.tabs,.footer{display:none!important}.shell{padding-top:0!important;width:min(1080px,calc(100% - 8px))!important}';d.head.appendChild(s)}const wanted=mode==='lyrics'?'lyricsView':'scanView',btn=d.querySelector('.tab[data-view="'+wanted+'"]');if(btn&&!btn.classList.contains('active'))btn.click();const h=Math.max(d.documentElement.scrollHeight,d.body?.scrollHeight||0);if(h>400)tools.style.height=(h+28)+'px'}catch(e){}}
 function resizeBeat(){try{const d=beat.contentDocument,h=Math.max(d.documentElement.scrollHeight,d.body?.scrollHeight||0);if(h>400)beat.style.height=(h+28)+'px'}catch(e){}}
 function select(next){mode=next;tabs.forEach(x=>x.classList.toggle('active',x.dataset.mode===next));const isBeat=next==='beat';tools.classList.toggle('active',!isBeat);beat.classList.toggle('active',isBeat);if(isBeat)resizeBeat();else cleanTools();window.scrollTo({top:0,behavior:'smooth'})}
-tabs.forEach(b=>b.addEventListener('click',()=>select(b.dataset.mode)));tools.addEventListener('load',()=>{cleanTools();setTimeout(cleanTools,250);setTimeout(cleanTools,900)});beat.addEventListener('load',()=>{resizeBeat();setTimeout(resizeBeat,300);setTimeout(resizeBeat,1000)});setInterval(()=>{mode==='beat'?resizeBeat():cleanTools()},1600);
+tabs.forEach(b=>b.addEventListener('click',()=>select(b.dataset.mode)));tools.addEventListener('load',()=>{if(mode!=='beat'){cleanTools();setTimeout(cleanTools,250);setTimeout(cleanTools,900)}});beat.addEventListener('load',()=>{resizeBeat();setTimeout(resizeBeat,300);setTimeout(resizeBeat,1000)});setInterval(()=>{mode==='beat'?resizeBeat():cleanTools()},1600);
 </script>
 </body>
 </html>
