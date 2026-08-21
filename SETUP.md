@@ -1,68 +1,32 @@
-# Music Coach AI setup
+# Music Coach — free setup
 
-## What works in the browser now
+This version is designed to stay at **$0**.
 
-- Upload and play an audio file.
-- Measure duration, peak level, average level, and a clipping estimate locally on the device.
-- Preview the full coaching-report layout.
-- Send the selected song to a secure analyzer endpoint when one is configured.
+## What you need
 
-## What the secure analyzer adds
+- The GitHub Pages site you already enabled.
+- A browser on your phone or computer.
+- No Render account.
+- No OpenAI API key.
+- No API credits.
+- No backend server.
 
-The server in `server/` sends MP3/WAV audio to OpenAI's `gpt-audio-1.5` model and returns:
+## How to use it
 
-- Flow / pocket score
-- Cadence score
-- Vocal delivery score
-- Hook strength
-- Lyrics feedback
-- Replayability
-- Song structure
-- Mix / clarity
-- Originality
-- Explained hit-potential score
-- Approximate timestamped coaching notes
-- A ranked "fix these first" list
+1. Open the Music Coach GitHub Pages site.
+2. Choose an audio file.
+3. Optionally enter the genre, feedback focus, and lyrics.
+4. Tap **Run free analysis**.
+5. Review the local technical measurements and energy map.
+6. Tap **Copy coaching request**.
+7. In ChatGPT, attach the same song and paste the prepared request for the subjective music-coach review.
 
-The hit-potential score is a creative/commercial-readiness heuristic, not a prediction that a song will become a hit.
+## What is analyzed locally
 
-## Server environment variables
+The browser measures duration, peak level, rough RMS level, clipping, estimated dynamic range, crest factor, very quiet sections, and relative energy across eight sections of the track.
 
-Never put an API key in `index.html` or commit it to GitHub.
+The webpage does not upload the selected song during local analysis.
 
-Set these only on the backend host:
+## Why the page does not score flow or hit potential itself
 
-```text
-OPENAI_API_KEY=your_server_side_key
-ALLOWED_ORIGIN=https://YOUR-GITHUB-USERNAME.github.io
-PORT=3000
-```
-
-If the GitHub Pages site uses a project URL, the browser origin is still `https://YOUR-GITHUB-USERNAME.github.io`.
-
-## Run the analyzer on a Node host
-
-The backend requires Node 22 or newer.
-
-```bash
-cd server
-npm install
-npm start
-```
-
-The server exposes:
-
-- `GET /health`
-- `POST /analyze` using multipart form data with the `song` field
-
-For the first AI version, use MP3 or WAV for full analysis. The browser can still locally inspect other audio formats your phone/browser can decode.
-
-## Connect the webpage
-
-Open **AI backend connection** on the webpage, paste the HTTPS URL ending in `/analyze`, and save it. Example:
-
-```text
-https://your-secure-backend.example.com/analyze
-```
-
-The webpage intentionally does not generate fake flow or hit scores when the backend is missing.
+A static webpage cannot honestly judge musical flow, hook memorability, vocal delivery, or commercial readiness from simple waveform measurements. The page therefore does not create fake subjective scores. It prepares a detailed coaching request to use with the actual song instead.
