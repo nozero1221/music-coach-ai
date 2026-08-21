@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#09090d">
 <title>Beat → Song Builder • Songwriting DNA</title>
 <style>
-:root{--text:#f7f7fb;--muted:#9b9bad;--line:#2a2a37;--accent:#f472b6;--accent2:#8b5cf6;--good:#86efac}
+:root{--text:#f7f7fb;--muted:#9b9bad;--line:#2a2a37;--accent:#f472b6;--accent2:#8b5cf6}
 *{box-sizing:border-box}body{margin:0;background:transparent;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(1080px,calc(100% - 8px));margin:auto}.panel{border:1px solid rgba(244,114,182,.38);background:linear-gradient(135deg,rgba(244,114,182,.10),rgba(139,92,246,.10));border-radius:18px;padding:14px 15px;margin-bottom:10px}.row{display:flex;gap:12px;align-items:flex-start}.switch{position:relative;width:48px;height:28px;flex:0 0 auto}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;border-radius:999px;background:#343442;border:1px solid #4a4a5b;transition:.2s;cursor:pointer}.slider:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;border-radius:50%;background:white;transition:.2s}.switch input:checked+.slider{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:#f9a8d4}.switch input:checked+.slider:before{transform:translateX(20px)}h2{font-size:15px;margin:1px 0 4px}.sub{font-size:12px;color:var(--muted);line-height:1.45}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.chips span{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:5px 7px;background:#0d0d13;color:#d9d9e5}.status{font-size:10px;font-weight:900;color:#f9a8d4;margin-top:8px}.note{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.4}iframe{display:block;width:100%;border:0;min-height:1800px;background:transparent}@media(max-width:520px){.panel{padding:12px}.sub{font-size:11px}}
 </style>
 </head>
@@ -15,41 +15,66 @@
 <section class="panel">
 <div class="row">
 <label class="switch" aria-label="Songwriting DNA engine"><input id="dnaMode" type="checkbox" checked><span class="slider"></span></label>
-<div><h2>🧬 Songwriting DNA engine</h2><div class="sub">Uses broad patterns from successful songwriting across genres and eras to choose stronger hooks, verses, cadences, rhyme strategies, melodic space, and section contrast for this beat.</div><div class="chips"><span>hooks</span><span>flows</span><span>cadence switches</span><span>rhyme density</span><span>storytelling</span><span>melodic space</span><span>section contrast</span><span>replayability</span></div><div class="status" id="dnaStatus">SONGWRITING DNA ON • ALL-GENRE</div><div class="note">This compares technique families; it does not copy or closely imitate any one artist, lyric, melody, or song.</div></div>
+<div><h2>🧬 Songwriting DNA engine</h2><div class="sub">Loads a versioned reference database of chart-era findings, genre craft patterns, technique archetypes, and artist craft profiles before building the songwriting request.</div><div class="chips"><span>chart-era priors</span><span>genre families</span><span>technique blends</span><span>artist craft profiles</span><span>hooks</span><span>flows</span><span>cadence</span><span>replayability</span></div><div class="status" id="dnaStatus">SONGWRITING DNA ON • LOADING REFERENCE DB</div><div class="note" id="dbNote">High-level craft observations only. No copyrighted lyrics or melodies are stored.</div></div>
 </div>
 </section>
 <iframe id="spaceFrame" src="beat-melodic-space.html" title="Beat builder with songwriting DNA, melodic-space, quality-first, and voice-fit modes"></iframe>
 </div>
 <script>
-const frame=document.getElementById('spaceFrame'),dna=document.getElementById('dnaMode'),status=document.getElementById('dnaStatus');
-const dnaRules=`SONGWRITING-DNA MODE: ON — ALL-GENRE COMPARATIVE ENGINE.
-Use broad, high-level songwriting patterns drawn from successful music across eras and genres to improve the ORIGINAL song for this beat. Do not imitate any single artist and do not reproduce or closely paraphrase recognizable lyrics, melodies, flows, or signature passages.
+const frame=document.getElementById('spaceFrame'),dna=document.getElementById('dnaMode'),status=document.getElementById('dnaStatus'),dbNote=document.getElementById('dbNote');
+let referenceDB=null,dbError=false;
 
-Treat this as a comparative selection problem. For THIS beat, decide which technique families fit best, then combine only the useful ones:
-- hook economy and title-phrase memorability
-- conversational melodic phrasing
-- internal rhyme / multisyllabic rhyme when the pocket benefits from it
-- sparse repetition and negative space when melody benefits from it
-- syncopated or off-kilter cadence when the drums support it
-- cadence switches that create contrast without sounding random
-- storytelling and concrete detail when the song needs emotional depth
-- punchline density only when it fits the genre/section
-- verse-to-hook contrast in syllable density and melodic simplicity
-- rhyme looseness when natural speech sounds better than a perfect rhyme
-- section progression so Verse 2 adds information instead of repeating Verse 1
-- replayability through a small number of memorable phrases rather than excessive wording
+const baseDnaRules=`SONGWRITING-DNA MODE: ON — ALL-GENRE COMPARATIVE ENGINE.
+Use broad, high-level songwriting patterns from the reference database to improve the ORIGINAL song for this beat. Do not imitate any single artist and do not reproduce or closely paraphrase recognizable lyrics, melodies, flows, or signature passages.
 
-Before finalizing the song, compare at least 3 possible technique blends for the beat and choose the strongest one. Example blend categories may include: melodic-conversational, dense-technical, sparse-minimal, storytelling-forward, cadence-switch-heavy, hook-first, or hybrid. Do not present artist names as style instructions.
+For THIS beat:
+1. Analyze structure, energy, drums, melodic openness, section contrast, and vocal space first.
+2. Choose the best-fitting era/genre priors only when useful; do not force stereotypes.
+3. Compare at least 3 technique blends.
+4. Pick one primary technique family and optionally one secondary contrast family.
+5. Apply the winning blend to concept, title, hook, verses, flow, cadence, rhyme approach, phrase length, vocal density, repetition, rests, transitions, and section progression.
+6. Use artist profiles only as high-level craft checklists. Never write “in the style of” an artist or copy a recognizable flow, lyric, melody, or signature passage.
+7. Draft/test the hook before overbuilding verses. Prefer natural speech, memorable phrases, and beat fit over technical complexity.
+8. Make Verse 2 add information, consequence, perspective, or a new image.
+9. Run an overfill check and remove words when space improves the song.
+10. HIT-POTENTIAL CHECK is heuristic only: score hook recall, natural phrasing, flow/pocket, section contrast, emotional clarity, originality, and replayability. Revise any score below 8/10. Never guarantee chart success.`;
 
-Apply the chosen DNA to EVERYTHING: concept, title, hook, verses, flow, cadence, rhyme approach, phrase length, vocal density, section structure, repetition, rests, and transitions.
+function compactDB(db){
+  if(!db)return '';
+  const measured=(db.measured_priors||[]).map(x=>`- ${x.finding} USE: ${x.use}`).join('\n');
+  const eras=(db.era_profiles||[]).map(x=>`- ${x.era}: ${(x.traits||[]).join('; ')}. USE WHEN: ${x.use_when}`).join('\n');
+  const genres=(db.genre_profiles||[]).map(x=>`- ${x.genre}: PRIORITIZE ${(x.priorities||[]).join(', ')}. AVOID ${(x.avoid||[]).join(', ')}`).join('\n');
+  const archetypes=(db.technique_archetypes||[]).map(x=>`- ${x.name}: ${(x.traits||[]).join(', ')}. BEST FOR ${(x.best_for||[]).join(', ')}`).join('\n');
+  const artists=(db.artist_technique_profiles||[]).map(x=>`- ${x.artist} craft reference: ${(x.strengths||[]).join(', ')}. ORIGINAL-WORK TRANSLATION: ${x.translate_to_original_work}`).join('\n');
+  const logic=db.selection_logic?Object.values(db.selection_logic).map((x,i)=>`${i+1}. ${x}`).join('\n'):'';
+  return `\n\nREFERENCE DATABASE ${db.version||'v1'} — HIGH-LEVEL CRAFT ONLY\n\nMEASURED / CHART-SOURCED PRIORS:\n${measured}\n\nERA HEURISTICS:\n${eras}\n\nGENRE HEURISTICS:\n${genres}\n\nTECHNIQUE ARCHETYPES:\n${archetypes}\n\nARTIST TECHNIQUE REFERENCES — ANALYSIS ONLY, DO NOT IMITATE:\n${artists}\n\nDATABASE SELECTION LOGIC:\n${logic}`;
+}
 
-HIT-POTENTIAL CHECK (heuristic, not a guarantee): score 1–10 for hook recall, natural phrasing, flow/pocket, section contrast, emotional clarity, originality, and replayability. If one of these is below 8, revise the weak part before presenting the final song. Never claim a song is guaranteed to chart or become a hit.`;
+async function loadDB(){
+  try{
+    const r=await fetch('data/songwriting-dna-reference-v1.json',{cache:'no-store'});
+    if(!r.ok)throw new Error('db');
+    referenceDB=await r.json();dbError=false;sync();
+  }catch(e){dbError=true;referenceDB=null;sync();}
+}
+
 let patchedFn=null;
 function innerBuilder(){try{const s=frame.contentDocument;if(!s)return null;const qf=s.getElementById('qualityFrame');if(!qf||!qf.contentDocument)return null;const q=qf.contentDocument,b=q.getElementById('builder');return b&&b.contentWindow?b.contentWindow:null}catch(e){return null}}
-function patch(){try{const w=innerBuilder();if(!w||typeof w.buildRequest!=='function')return;if(w.buildRequest!==patchedFn){const current=w.buildRequest.bind(w);const wrapped=function(){const base=current();return dna.checked?base+'\n\n'+dnaRules:base};patchedFn=wrapped;w.buildRequest=wrapped;const oldFlow=typeof w.flowFor==='function'?w.flowFor.bind(w):null;if(oldFlow&&!w.__songwritingDnaFlowPatched){w.flowFor=function(structure){const out=oldFlow(structure);return out.map(x=>({...x,text:x.text+(dna.checked?' Songwriting-DNA: choose the best high-level technique family for this section based on the beat; prioritize naturalness, contrast, memorability, and originality over copying any artist.':'')}))};w.__songwritingDnaFlowPatched=true}}if(w.beatReport&&typeof w.render==='function'){try{w.render()}catch(e){}}resize()}catch(e){}}
+function currentRules(){return baseDnaRules+compactDB(referenceDB)}
+function patch(){try{const w=innerBuilder();if(!w||typeof w.buildRequest!=='function')return;if(w.buildRequest!==patchedFn){const current=w.buildRequest.bind(w);const wrapped=function(){const base=current();return dna.checked?base+'\n\n'+currentRules():base};patchedFn=wrapped;w.buildRequest=wrapped;const oldFlow=typeof w.flowFor==='function'?w.flowFor.bind(w):null;if(oldFlow&&!w.__songwritingDnaFlowPatched){w.flowFor=function(structure){const out=oldFlow(structure);return out.map(x=>({...x,text:x.text+(dna.checked?' Songwriting-DNA: compare reference-database technique families for this section; prioritize naturalness, contrast, memorability, beat fit, and originality over copying any artist.':'')}))};w.__songwritingDnaFlowPatched=true}}if(w.beatReport&&typeof w.render==='function'){try{w.render()}catch(e){}}resize()}catch(e){}}
 function resize(){try{const d=frame.contentDocument,h=Math.max(d.documentElement.scrollHeight,d.body?.scrollHeight||0);if(h>500)frame.style.height=(h+40)+'px'}catch(e){}}
-function sync(){status.textContent=dna.checked?'SONGWRITING DNA ON • ALL-GENRE':'SONGWRITING DNA OFF';status.style.color=dna.checked?'#f9a8d4':'#b8b8c8';patch()}
-dna.addEventListener('change',sync);frame.addEventListener('load',()=>{patchedFn=null;setTimeout(patch,250);setTimeout(patch,800);setTimeout(patch,1500)});setInterval(()=>{patch();resize()},1200);sync();
+function sync(){
+  if(!dna.checked){status.textContent='SONGWRITING DNA OFF';status.style.color='#b8b8c8'}
+  else if(referenceDB){status.textContent=`SONGWRITING DNA ON • DB ${referenceDB.version} • ${(referenceDB.genre_profiles||[]).length} GENRES • ${(referenceDB.artist_technique_profiles||[]).length} ARTIST CRAFT PROFILES`;status.style.color='#f9a8d4'}
+  else if(dbError){status.textContent='SONGWRITING DNA ON • FALLBACK MODE';status.style.color='#fbbf24'}
+  else{status.textContent='SONGWRITING DNA ON • LOADING REFERENCE DB';status.style.color='#f9a8d4'}
+  if(referenceDB)dbNote.textContent=`DB ${referenceDB.version}: ${(referenceDB.measured_priors||[]).length} measured/chart priors, ${(referenceDB.era_profiles||[]).length} eras, ${(referenceDB.genre_profiles||[]).length} genres, ${(referenceDB.technique_archetypes||[]).length} technique archetypes, ${(referenceDB.artist_technique_profiles||[]).length} artist craft profiles. No lyrics or melodies stored.`;
+  patch();
+}
+dna.addEventListener('change',sync);
+frame.addEventListener('load',()=>{patchedFn=null;setTimeout(patch,250);setTimeout(patch,800);setTimeout(patch,1500)});
+setInterval(()=>{patch();resize()},1200);
+sync();loadDB();
 </script>
 </body>
 </html>
