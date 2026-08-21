@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09090d">
+<title>Beat → Song Builder • Voice Fit</title>
+<style>
+:root{--bg:#09090d;--panel:#111118;--text:#f7f7fb;--muted:#9b9bad;--line:#2a2a37;--accent:#8b5cf6;--accent2:#22d3ee;--good:#34d399}
+*{box-sizing:border-box}body{margin:0;background:transparent;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{width:min(1080px,calc(100% - 8px));margin:auto}.voice{border:1px solid rgba(139,92,246,.42);background:linear-gradient(135deg,rgba(139,92,246,.16),rgba(34,211,238,.07));border-radius:18px;padding:14px 15px;margin:0 0 14px}.row{display:flex;gap:12px;align-items:flex-start}.switch{position:relative;width:48px;height:28px;flex:0 0 auto}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;border-radius:999px;background:#343442;border:1px solid #4a4a5b;transition:.2s;cursor:pointer}.slider:before{content:"";position:absolute;width:20px;height:20px;left:3px;top:3px;border-radius:50%;background:white;transition:.2s}.switch input:checked+.slider{background:linear-gradient(135deg,var(--accent),#6657f1);border-color:#8274f5}.switch input:checked+.slider:before{transform:translateX(20px)}h2{font-size:15px;margin:1px 0 4px}.sub{font-size:12px;color:var(--muted);line-height:1.45}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.chips span{font-size:10px;border:1px solid var(--line);border-radius:999px;padding:5px 7px;background:#0d0d13;color:#d9d9e5}.status{font-size:10px;font-weight:900;color:#a7f3d0;margin-top:8px}iframe{display:block;width:100%;border:0;min-height:1550px;background:transparent}@media(max-width:520px){.voice{padding:12px}.sub{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="voice">
+<div class="row">
+<label class="switch" aria-label="Fit this beat to my voice"><input id="voiceFit" type="checkbox" checked><span class="slider"></span></label>
+<div><h2>Fit this beat to my voice</h2><div class="sub">When on, the full-song request asks for an easier speech-forward melodic-rap approach instead of demanding traditional singing.</div><div class="chips"><span>2–4 note hook shapes</span><span>talk-sung verses</span><span>short held vowels</span><span>no big runs</span><span>emotion over range</span></div><div class="status" id="voiceStatus">VOICE-FIT MODE ON</div></div>
+</div>
+</section>
+<iframe id="builder" src="beat-builder.html" title="Beat to Song Builder"></iframe>
+</div>
+<script>
+const fit=document.getElementById('voiceFit'),frame=document.getElementById('builder'),status=document.getElementById('voiceStatus');
+const voiceRules=`VOICE-FIT MODE: ON.
+Design the song for an easier, speech-forward melodic-rap vocal approach. Prioritize natural tone, rhythm, emotion, phrasing, and memorable repetition over traditional singing difficulty.
+- Keep most melodic phrases within a narrow comfortable range; hooks should usually work with roughly 2–4 nearby notes rather than wide jumps.
+- Favor talk-sung verses and short melodic phrases.
+- Use brief held vowels only on important words; avoid long high sustained notes.
+- Avoid demanding vocal runs, belting, large interval jumps, or melodies that require a powerful traditional singing voice.
+- If a lyric would be awkward or difficult to sing, rewrite it into an easier speech-forward shape without weakening the meaning.
+- Let doubles, harmonies, ad-libs, delay/reverb, dynamics, and arrangement create size instead of requiring bigger vocal range.
+- For each hook line, include an EASY MELODY MAP using plain directions such as “same note,” “slightly up,” “slightly down,” “speak this,” or “hold this word,” not formal music notation.
+- Give a difficulty warning anywhere the melody you recommend may still be hard, and provide an easier alternative.`;
+let patched=false;
+function patch(){
+  try{
+    const w=frame.contentWindow,d=frame.contentDocument;if(!w||!d||typeof w.buildRequest!=='function')return;
+    if(!patched){
+      const originalBuild=w.buildRequest.bind(w);
+      const originalFlow=typeof w.flowFor==='function'?w.flowFor.bind(w):null;
+      w.buildRequest=function(){const base=originalBuild();return fit.checked?base+'\n\n'+voiceRules:base};
+      if(originalFlow)w.flowFor=function(structure){const out=originalFlow(structure);if(!fit.checked)return out;return out.map(x=>({...x,text:x.text+' Voice-fit: keep the melody narrow, speech-forward, and easy to repeat; use production layers for size instead of difficult notes.'}))};
+      patched=true;
+    }
+    const copy=d.getElementById('copyBeatPrompt');
+    if(copy&&!copy.disabled&&typeof w.render==='function'){try{w.render()}catch(e){}}
+    resize();
+  }catch(e){}
+}
+function resize(){try{const d=frame.contentDocument,h=Math.max(d.documentElement.scrollHeight,d.body?.scrollHeight||0);if(h>400)frame.style.height=(h+28)+'px'}catch(e){}}
+function sync(){status.textContent=fit.checked?'VOICE-FIT MODE ON':'VOICE-FIT MODE OFF';status.style.color=fit.checked?'#a7f3d0':'#b8b8c8';patch()}
+fit.addEventListener('change',sync);frame.addEventListener('load',()=>{patched=false;patch();setTimeout(patch,250);setTimeout(patch,900)});setInterval(()=>{patch();resize()},1400);sync();
+</script>
+</body>
+</html>
