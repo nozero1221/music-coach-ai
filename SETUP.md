@@ -1,32 +1,33 @@
-# Music Coach — free setup
+# Music Coach setup
 
-This version is designed to stay at **$0**.
+The site is designed to run as a static GitHub Pages project. No backend or API key is required.
 
-## What you need
+## Publish
 
-- The GitHub Pages site you already enabled.
-- A browser on your phone or computer.
-- No Render account.
-- No OpenAI API key.
-- No API credits.
-- No backend server.
+GitHub Pages can publish the root of `main`.
 
-## How to use it
+Main files:
 
-1. Open the Music Coach GitHub Pages site.
-2. Choose an audio file.
-3. Optionally enter the genre, feedback focus, and lyrics.
-4. Tap **Run free analysis**.
-5. Review the local technical measurements and energy map.
-6. Tap **Copy coaching request**.
-7. In ChatGPT, attach the same song and paste the prepared request for the subjective music-coach review.
+- `index.html` — three-tab shell
+- `song-tools.html` — Song Scan + Lyrics & Delivery tools
+- `beat-builder.html` — Beat → Song Builder
 
-## What is analyzed locally
+## Privacy / cost
 
-The browser measures duration, peak level, rough RMS level, clipping, estimated dynamic range, crest factor, very quiet sections, and relative energy across eight sections of the track.
+Song and beat measurements happen with the browser Web Audio API on the user's device. The local pages do not upload the audio.
 
-The webpage does not upload the selected song during local analysis.
+Creative listening tasks such as judging a performance, rewriting lyrics, or writing a full original song for a specific beat are handled by a prepared ChatGPT handoff. The user attaches the same audio in ChatGPT and pastes the generated request.
 
-## Why the page does not score flow or hit potential itself
+There is no OpenAI API key, paid backend host, or per-song API charge in this repository.
 
-A static webpage cannot honestly judge musical flow, hook memorability, vocal delivery, or commercial readiness from simple waveform measurements. The page therefore does not create fake subjective scores. It prepares a detailed coaching request to use with the actual song instead.
+## Beat Builder workflow
+
+1. Open **Beat → Song Builder**.
+2. Choose an instrumental.
+3. Add genre, mood, theme, optional known BPM, and goal.
+4. Tap **Analyze beat locally**.
+5. Review the 12-part energy view, rough structure, and flow blueprint.
+6. Tap **Copy full-song request**.
+7. In ChatGPT, attach the same beat and paste the request.
+
+The rough local structure is heuristic. Listening to the actual beat should determine the final timestamps and arrangement.
