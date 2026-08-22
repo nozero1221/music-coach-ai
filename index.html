@@ -19,9 +19,9 @@
 <button class="tab" data-mode="lyrics">2️⃣ ✍️ Lyrics & Delivery</button>
 <button class="tab" data-mode="scan">3️⃣ 🎵 Song Scan</button>
 </nav>
-<iframe id="beatFrame" class="frame active" src="beat-single-page-v4.html?v=topic-brain-v45-20260821-1" title="Beat to Song Builder v4.5"></iframe>
+<iframe id="beatFrame" class="frame active" src="beat-single-page-v4.html?v=smart-composer-v46-20260821-1" title="Beat to Song Builder v4.6"></iframe>
 <iframe id="toolsFrame" class="frame" src="song-tools.html" title="Lyrics Lab and Song Scan"></iframe>
-<div class="note">Workflow: upload beat → enter or randomize/edit topic → analyze → generate → use feedback to rewrite → refine lyrics/delivery → scan. Beat generation stays browser-only: no API, credits, trial, account, or model download.</div>
+<div class="note">Workflow: upload beat → enter or randomize/edit topic → analyze → generate with topic-first quality gates → use feedback to rebuild → refine lyrics/delivery → scan. Beat generation stays browser-only: no API, credits, trial, account, or model download.</div>
 </main>
 <script>
 const tabs=[...document.querySelectorAll('.tab')],tools=document.getElementById('toolsFrame'),beat=document.getElementById('beatFrame');let mode='beat';
@@ -30,7 +30,7 @@ function resizeBeat(){try{const d=beat.contentDocument,h=Math.max(d.documentElem
 function select(next){mode=next;tabs.forEach(x=>x.classList.toggle('active',x.dataset.mode===next));const isBeat=next==='beat';tools.classList.toggle('active',!isBeat);beat.classList.toggle('active',isBeat);if(isBeat)resizeBeat();else cleanTools();window.scrollTo({top:0,behavior:'smooth'})}
 tabs.forEach(b=>b.addEventListener('click',()=>select(b.dataset.mode)));tools.addEventListener('load',()=>{if(mode!=='beat'){cleanTools();setTimeout(cleanTools,250);setTimeout(cleanTools,900)}});beat.addEventListener('load',()=>{resizeBeat();setTimeout(resizeBeat,300);setTimeout(resizeBeat,1000)});setInterval(()=>{mode==='beat'?resizeBeat():cleanTools()},1200);
 </script>
-<script src="js/v4-language-diversity-v2.js?v=20260821-rollback1"></script>
-<script src="js/context-rhyme-feedback-v1.js?v=20260821-1"></script>
+<script src="js/smart-composer-v46-helper.js?v=20260821-1"></script>
+<script src="js/smart-composer-v46.js?v=20260821-1"></script>
 </body>
 </html>
