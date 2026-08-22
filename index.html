@@ -30,5 +30,6 @@ function resizeBeat(){try{const d=beat.contentDocument,h=Math.max(d.documentElem
 function select(next){mode=next;tabs.forEach(x=>x.classList.toggle('active',x.dataset.mode===next));const isBeat=next==='beat';tools.classList.toggle('active',!isBeat);beat.classList.toggle('active',isBeat);if(isBeat)resizeBeat();else cleanTools();window.scrollTo({top:0,behavior:'smooth'})}
 tabs.forEach(b=>b.addEventListener('click',()=>select(b.dataset.mode)));tools.addEventListener('load',()=>{if(mode!=='beat'){cleanTools();setTimeout(cleanTools,250);setTimeout(cleanTools,900)}});beat.addEventListener('load',()=>{resizeBeat();setTimeout(resizeBeat,300);setTimeout(resizeBeat,1000)});setInterval(()=>{mode==='beat'?resizeBeat():cleanTools()},1600);
 </script>
+<script src="js/music-coach-intelligence-v1.js?v=20260821-1"></script>
 </body>
 </html>
