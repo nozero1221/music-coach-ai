@@ -1,0 +1,1 @@
+(()=>{'use strict';const f=document.getElementById('beatFrame');function patch(){try{const w=f?.contentWindow;if(w&&!w.rand)w.rand=a=>a?.length?a[Math.floor(Math.random()*a.length)]:''}catch(e){}}f?.addEventListener('load',()=>{setTimeout(patch,80);setTimeout(patch,400)});setInterval(patch,1000);setTimeout(patch,100)})();
