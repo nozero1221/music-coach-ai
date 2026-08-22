@@ -42,6 +42,20 @@ function patch(){
   }
   const btn=bd.getElementById('mcGenerateHere'),status=bd.getElementById('mcGenerateHereStatus'),result=bd.getElementById('mcGeneratedSong'),actions=bd.getElementById('mcGeneratedActions'),copy=bd.getElementById('mcCopyGenerated'),again=bd.getElementById('mcAgainGenerated');
   if(!btn||!status||!result||!actions)return;
+  if(!native.__mcSafeGenerateInstalled&&typeof native.generate==='function'){
+    const original=native.generate.bind(native);
+    native.__mcSafeGenerateInstalled=true;
+    native.generate=function(){
+      try{return original()}catch(e){
+        console.error('Music Coach generation error',e);
+        native.__mcLastGenerateError=e?.message||String(e);
+        nativeStatus.textContent='Generation error: '+native.__mcLastGenerateError;
+        nativeStatus.className='status warn';
+        return null;
+      }
+    };
+    nativeGen.onclick=native.generate;
+  }
   const syncReady=()=>{
     const ready=!readyFlag.disabled;
     btn.disabled=!ready;
@@ -58,6 +72,7 @@ function patch(){
     while(Date.now()-started<60000){
       const s=String(nativeStatus.textContent||'');
       const t=String(nativeOut.textContent||'');
+      if(native.__mcLastGenerateError){status.textContent='Generation error: '+native.__mcLastGenerateError;status.style.color='#fbbf24';return;}
       if(/loading free phonetic/i.test(s))status.textContent='Loading free rhyme + syllable intelligence for this first generation…';
       else if(/phonetic intelligence ready|generating/i.test(s))status.textContent='Writing your song now…';
       else if(/analyze the beat below first/i.test(s)){status.textContent='The generator still needs the beat scan. Tap Analyze beat locally, then try again.';return;}
@@ -69,9 +84,9 @@ function patch(){
   };
   const run=()=>{
     if(readyFlag.disabled){status.textContent='Analyze the beat first.';return;}
-    status.style.color='';status.textContent='Starting the free generator…';
+    native.__mcLastGenerateError='';status.style.color='';status.textContent='Starting the free generator…';
     const before=String(nativeOut.textContent||'');
-    try{nativeGen.click();waitForResult(before)}catch(e){status.textContent='The generator hit an error before it could start. Refresh once and retry.';status.style.color='#fbbf24'}
+    try{nativeGen.click();waitForResult(before)}catch(e){status.textContent='The generator hit an error before it could start: '+(e?.message||e);status.style.color='#fbbf24'}
   };
   if(!btn.__mcBound){btn.__mcBound=true;btn.addEventListener('click',run);again?.addEventListener('click',run);copy?.addEventListener('click',()=>copyText(lastSong||result.textContent,status));}
   if(!nd.getElementById('mcGeneratedHeading')){
