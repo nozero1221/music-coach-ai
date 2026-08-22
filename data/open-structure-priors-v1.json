@@ -1,0 +1,22 @@
+{
+  "version":"1.0.0",
+  "name":"Open Structure Priors v1",
+  "license":"CC0-compatible derived metadata only",
+  "provenance":"SALAMI public structural-annotation conventions plus Music Coach heuristics. No source audio, lyrics, melodies, or copyrighted song text are stored.",
+  "purpose":"Provide lightweight browser-side priors for how many large sections to expect and prevent novelty detection from creating implausibly tiny segments.",
+  "target_sections":{"short":6,"medium":7,"long":9},
+  "minimum_section_seconds":8,
+  "boundary_weights":{"rms_delta":0.32,"spectral_flux":0.33,"centroid_delta":0.22,"zcr_delta":0.13},
+  "templates":{
+    "short":["Intro","Verse 1","Hook","Verse 2","Final Hook","Outro"],
+    "medium":["Intro","Verse 1","Hook","Verse 2","Bridge / Break","Final Hook","Outro"],
+    "long":["Intro","Verse 1","Pre-Hook","Hook","Instrumental / Break","Verse 2","Pre-Hook","Final Hook","Outro"]
+  },
+  "rules":[
+    "Prefer persistent multi-feature changes over a single loudness jump.",
+    "Keep large-section boundaries separated by a minimum duration unless a very strong novelty spike exists.",
+    "Treat repeated high-energy regions as hook candidates, not automatic proof of a hook.",
+    "Allow instrumental or breathing sections when a strong boundary is followed by reduced vocal-density opportunity.",
+    "Use structure priors as a starting point; the actual music can override them."
+  ]
+}
